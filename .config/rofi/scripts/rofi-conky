@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# A rofi powered menu to launch conky
+
+full=''
+short=''
+todo=''
+none=''
+
+launch="$HOME/.config/conky/start.sh"
+
+chosen=$(printf '%s;%s;%s;%s\n' "$full" "$short" "$todo" "$none" \
+    | rofi -theme-str '@import "conky.rasi"' \
+           -dmenu \
+           -sep ';' \
+           -selected-row 2)
+
+case "$chosen" in
+    "$full")  $launch -f ;;
+    "$short") $launch -s ;;
+    "$todo")  $launch -t ;;
+	"$none")  $launch -k ;;
+    *) exit 1 ;;
+esac
